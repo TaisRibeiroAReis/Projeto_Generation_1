@@ -1,0 +1,303 @@
+package Banco;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class Cliente {
+	private String nome;
+	private String email;
+	private String telefone;
+	private String endereco;
+	private String dataNascimento;
+	private String genero;
+	private String cpf;
+	private int saldo = 0;
+	private int codigoConta;
+	private String senha;
+
+	public Cliente(String nome, String email, String telefone, String endereco, String dataNascimento, String genero,
+			String cpf, int codigoConta) {
+		this.nome = nome;
+		this.email = email;
+		this.telefone = telefone;
+		this.endereco = endereco;
+		this.dataNascimento = dataNascimento;
+		this.genero = genero;
+		this.cpf = cpf;
+	}
+
+	public Cliente() {
+		cadastro();
+
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+	public String getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(String dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public int getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(int saldo) {
+		this.saldo = saldo;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+
+	}
+
+	public int getCodigoConta() {
+		return codigoConta;
+	}
+
+	public void setCodigoConta(int codigoConta) {
+		this.codigoConta = codigoConta;
+	}
+
+	public void depositar() {
+		Scanner scan = new Scanner(System.in);
+
+		
+		System.out.println("Digite o dep�sito a ser efetuado");
+		int deposito = scan.nextInt();
+
+		setSaldo(getSaldo() + deposito);
+
+		System.out.println("Dep�sito de R$ " + deposito + " realizado!!!");
+
+	
+
+	}
+
+	public void sacar() {
+
+		Scanner scan = new Scanner(System.in);
+
+		System.out.println("Digite o saque a ser efetuado");
+		int saque = scan.nextInt();
+
+		if (getSaldo() < saque) {
+			System.out.println("Nao foi possivel realizar saque");
+		} else {
+			setSaldo(getSaldo() - saque);
+			System.out.println("Saque de R$ " + saque + " realizado!!");
+		}
+
+	}
+
+	public void cadastro() {
+
+		Scanner scan = new Scanner(System.in);
+		Scanner scanInt = new Scanner(System.in);
+		System.out.println("Digite seu nome:");
+		this.nome = scan.nextLine();
+
+		System.out.println("Digite seu endereco:");
+		this.endereco = scan.nextLine();
+
+		System.out.println("Digite seu email:");
+		this.email = scan.nextLine();
+
+		System.out.println("Digite seu cpf:");
+		this.cpf = scan.nextLine();
+
+		System.out.println("Digite sua data de nascimento:");
+		this.dataNascimento = scan.nextLine();
+
+		System.out.println("Digite seu genero:");
+		System.out.println("\n1 - MASCULINO\t2 - FEMININO\t3 - OUTRO");
+		switch (scanInt.nextInt()) {
+		case 1:
+			this.genero = "Masculino";
+			break;
+		case 2:
+			this.genero = "Feminino";
+			break;
+		case 3:
+			this.genero = "Outro";
+			break;
+		default:
+			this.genero = "erro";
+		}
+
+		System.out.println("Digite seu telefone:");
+		this.telefone = scan.nextLine();
+
+		System.out.println("Digite uma senha de acesso:");
+		this.senha = scan.nextLine();
+
+	}
+
+	public void verificarDados() {
+
+		System.out.println(this);
+
+	}
+
+	public void transacao(Cliente cliente, ArrayList<Cliente> clientes) {
+		Scanner scan = new Scanner(System.in);
+
+		int op = 0;
+
+		// ------------------------------MENU DO CLIENTE---------------------
+		do {
+			try {
+				System.out.println("\nOl� " + cliente.getNome()
+						+ ", bem vindo ao banco Familia 38!!\nDigite\n(1)Para fazer deposito\n(2)Sacar\n(3)Verificar os dados da sua conta\n(4)Realizar transferencia\n(-1)Sair");
+				op = scan.nextInt();
+
+				if (op == 1) {
+					cliente.depositar();
+
+				} else if (op == 2) {
+
+					cliente.sacar();
+
+				} else if (op == 3) {
+
+					cliente.verificarDados();
+				} else if (op == 4) {
+					cliente.transferir(clientes);
+				}
+
+			} catch (NullPointerException NullPointerException) {
+				System.out.println("� preciso efetuar o cadastro/acesso antes");
+
+			} catch (InputMismatchException InputMismatchException) {
+				scan.nextLine();
+				System.out.println(
+						"Alguns dados foram inseridos de maneira incorreta, por favor,verifique se est� digitando n�meros inteiros!");
+
+			}
+
+		} while (op != -1);
+
+	}
+
+	public static Cliente validar(ArrayList<Cliente> clientes) {
+		Scanner scan = new Scanner(System.in);
+		Scanner scan2 = new Scanner(System.in);
+
+		try {
+			System.out.println("Insira o numero da sua conta:");
+			int codigo = scan.nextInt();
+
+			System.out.println("Insira sua senha:");
+			String senha = scan2.nextLine();
+
+			if (clientes.get(codigo).codigoConta == codigo && clientes.get(codigo).senha.equals(senha))
+				return clientes.get(codigo); // Retornando o cliente cujo o codigo foi informado
+
+		} catch (InputMismatchException InputMismatchException) {
+			System.out.println(
+					"Alguns dados foram inseridos de maneira incorreta, por favor,verifique se est� digitando n�meros inteiros!");
+		}
+
+		return null;
+
+	}
+
+	public void transferir(ArrayList<Cliente> clientes) {
+		Scanner scan = new Scanner(System.in);
+
+		System.out.println("Digite a conta para qual deseja transferir?");
+		int codigo = scan.nextInt();
+
+		int transferencia;
+
+		System.out.println("Digite a tranferencia a ser efetuada?");
+		transferencia = scan.nextInt();
+
+		if (this.getSaldo() < transferencia || this.equals(clientes.get(codigo))) {
+			System.out.println("Nao foi possivel realizar a transferencia"); // Verificando se o saldo � menor que a
+																				// transferencia ou se o cliente esta
+																				// fazendo transferencia para ele mesmo
+		} else {
+
+			Cliente recebedor = clientes.get(codigo); // Declarando o cliente que vai receber o cliente
+			recebedor.setSaldo(recebedor.getSaldo() + transferencia); // Adicionando o tranferencia ao saldo do
+																		// recebedor
+
+			this.setSaldo(getSaldo() - transferencia); // Retirando a transferencia do cliente que vai realizar a
+														// transferencia
+
+			System.out.println("Transferencia realizada para a conta" + recebedor.getCodigoConta());
+		}
+
+	}
+
+	public String formatarMoeda() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+		nf.setMinimumFractionDigits(2);
+		String formatoMoeda = nf.format(saldo);
+		return formatoMoeda;
+	}
+
+	@Override
+	public String toString() {
+		return "Nome:" + nome + ", Email:" + email + ", Telefone:" + telefone + ", Endereco:" + endereco
+				+ ", Data de nascimento=" + dataNascimento + ", Genero:" + genero + ", CPF:" + cpf + ", Saldo:"
+				+ formatarMoeda() + "";
+	}
+
+}
