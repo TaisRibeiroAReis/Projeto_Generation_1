@@ -1,0 +1,28 @@
+<? xml version = " 1.0 " encoding = " UTF-8 " ?>
+< projectDescription >
+	< nome > Geração-primeiro-projeto </ nome >
+	< comentário > </ comentário >
+	< projetos >
+	</ projetos >
+	< buildSpec >
+		< buildCommand >
+			< name > org.eclipse.jdt.core.javabuilder </ name >
+			< argumentos >
+			</ argumentos >
+		</ buildCommand >
+	</ buildSpec >
+	< naturezas >
+		< nature > org.eclipse.jdt.core.javanature </ nature >
+	</ naturezas >
+	< FilterResources >
+		< filtro >
+			< id > 1637161267398 </ id >
+			< nome > </ nome >
+			< tipo > 30 </ tipo >
+			< matcher >
+				< id > org.eclipse.core.resources.regexFilterMatcher </ id >
+				< argumentos > módulos_de_nodo | .git | __CREATED_BY_JAVA_LANGUAGE_SERVER __ </ argumentos >
+			</ matcher >
+		</ filtro >
+	</ filterResources >
+</ projectDescription >
